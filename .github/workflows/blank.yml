@@ -11,17 +11,12 @@ on:
   workflow_dispatch:
 
 jobs:     
-  build:    
-    runs-on: ubuntu-latest    
+  Fuzz:    
+    runs-on: ubuntu-latest 
+    timeout-minutes: 1
     steps:
       - uses: actions/checkout@v3
       - name: Clang++
         run: clang++ -g -fsanitize=fuzzer fuzz_me.cc     
-  
-  fuzz:
-    runs-on: ubuntu-latest
-    timeout-minutes: 1
-    steps:      
-      - uses: actions/checkout@v3
       - name: Execute
-        run: ./a.out        
+        run: ./a.out
