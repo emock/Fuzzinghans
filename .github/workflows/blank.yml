@@ -17,6 +17,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Clang++
-        run: clang++ -g -fsanitize=fuzzer fuzz_me.cc     
+        run: clang++ -g -fsanitize=address,fuzzer fuzz_me.cc     
       - name: Execute
         run: ./a.out
