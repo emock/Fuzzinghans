@@ -16,6 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@main
       - name: Clang++
-        run: clang++ -g -fsanitize=fuzzer fuzz_me.cc     
+        run: clang++ -g -fsanitize=address,fuzzer fuzz_me.cc     
       - name: Execute
         run: ./a.out -max_total_time=60
