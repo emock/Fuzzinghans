@@ -6,14 +6,18 @@ on:
 #   push:
 #     branches: [ "main" ]
   pull_request:
-    branches: [ "main", "release", "test"]
+    branches: ["release", "test"]
 
   workflow_dispatch:
 
 jobs:     
-  Fuzz_success:    
+  test:
+    name: Test
     runs-on: ubuntu-latest
-    if: github.ref.startWith('refs/heads/test')
+    if: 
+      contains('
+      refs/heads/test
+      ', github.ref)
     steps:
       - uses: actions/checkout@main      
       - name: Clang++
@@ -21,9 +25,13 @@ jobs:
       - name: Execute
         run: ./a.out -max_total_time=20
     
-  Fuzz_fail:
+  release:
+    name: Release
     runs-on: ubuntu-latest
-    if: github.ref.startWith('refs/heads/release')    
+    if: 
+      contains('
+      refs/heads/release
+      ', github.ref)
     steps:
       - uses: actions/checkout@main      
       - name: Clang++
