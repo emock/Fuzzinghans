@@ -7,7 +7,7 @@ bool FuzzMe(const uint8_t *Data, size_t DataSize) {
       Data[1] == 'U' &&
       Data[2] == 'Z' &&
       Data[3] == 'D' &&
-      Data[4] == 'Z';  // :‑<
+      Data[4] == 'Z';  // :‑<a
 }
 
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
