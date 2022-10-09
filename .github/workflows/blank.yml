@@ -13,7 +13,7 @@ on:
 jobs:     
   Fuzz_success:    
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/success_merge'    
+    if: github.ref.startWith('refs/heads/test')
     steps:
       - uses: actions/checkout@main      
       - name: Clang++
@@ -23,7 +23,7 @@ jobs:
     
   Fuzz_fail:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/fail_merge'    
+    if: github.ref.startWith('refs/heads/release')    
     steps:
       - uses: actions/checkout@main      
       - name: Clang++
