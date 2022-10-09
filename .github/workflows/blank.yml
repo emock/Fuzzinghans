@@ -1,34 +1,34 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Fuzzing
 
 on:  
-#   push:
-#     branches: [ "main" ]
   pull_request:
+  # We use two branches here test and release; We make no use of main here
     branches: ["release", "test"]
-
-  workflow_dispatch:
 
 jobs:     
   test:
     name: Test
     runs-on: ubuntu-latest
-    if: contains('test', github.base_ref)
+    # Execute when the a PR is done on this target branch 
+    if: github.base_ref == 'test'
     steps:
-      - uses: actions/checkout@main      
+    #checkout this github to work with
+      - uses: actions/checkout@main   
+      # Compile it using the libfuzz library
       - name: Clang++
         run: clang++ -g -fsanitize=fuzzer fuzz_me.cc        
+      # Run it for 10 minutes
       - name: Execute
-        run: ./a.out -max_total_time=20
+        run: ./a.out -max_total_time=600
     
   release:
     name: Release
     runs-on: ubuntu-latest
-    if: contains('release', github.base_ref)      
+    if: github.base_ref == 'release'
     steps:
       - uses: actions/checkout@main      
       - name: Clang++
+      # Compile it using libfuzz library and Address Sanitizer
         run: clang++ -g -fsanitize=address,fuzzer fuzz_me.cc        
       - name: Execute
-        run: ./a.out -max_total_time=20
+        run: ./a.out -max_total_time=600
