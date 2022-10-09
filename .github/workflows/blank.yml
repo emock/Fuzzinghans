@@ -14,10 +14,7 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    if: 
-      contains('
-      refs/heads/test
-      ', github.ref)
+    if: contains('test', github.base_ref)
     steps:
       - uses: actions/checkout@main      
       - name: Clang++
@@ -28,10 +25,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    if: 
-      contains('
-      refs/heads/release
-      ', github.ref)
+    if: contains('release', github.base_ref)      
     steps:
       - uses: actions/checkout@main      
       - name: Clang++
