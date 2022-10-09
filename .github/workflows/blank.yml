@@ -3,19 +3,30 @@
 name: Fuzzing
 
 on:  
-  push:
-    branches: [ "main" ]
+#   push:
+#     branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "success_merge", "fail_merge"]
 
   workflow_dispatch:
 
 jobs:     
-  Fuzz:    
-    runs-on: ubuntu-latest     
+  Fuzz_success:    
+    runs-on: ubuntu-latest
+    if: github.branch == 'success_merge'    
     steps:
-      - uses: actions/checkout@main
+      - uses: actions/checkout@main      
       - name: Clang++
-        run: clang++ -g -fsanitize=fuzzer fuzz_me.cc     
+        run: clang++ -g -fsanitize=fuzzer fuzz_me.cc        
       - name: Execute
-        run: ./a.out -max_total_time=60
+        run: ./a.out -max_total_time=20
+    
+  Fuzz_fail:
+    runs-on: ubuntu-latest
+    if: github.branch == 'fail_merge'    
+    steps:
+      - uses: actions/checkout@main      
+      - name: Clang++
+        run: clang++ -g -fsanitize=address,fuzzer fuzz_me.cc        
+      - name: Execute
+        run: ./a.out -max_total_time=20
